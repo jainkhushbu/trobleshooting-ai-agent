@@ -1,0 +1,43 @@
+=== DOCUMENT: Nginx Buffer Overflow Error (TS-102) ===
+Trigger: client intended to send too large body
+Summary: Nginx client request body buffer size is smaller than the incoming payload, causing the server to reject the requests.
+Cause: Incoming payload size (approx 18MB - 24MB) exceeds the configured client_body_buffer_size and client_max_body_size in nginx.conf.
+Resolution: Increase buffer limits. Update /etc/nginx/nginx.conf and set client_max_body_size 50M; and client_body_buffer_size 128k; then run nginx -s reload.
+Commands:
+sudo nginx -t
+cat /etc/nginx/nginx.conf | grep client_body_buffer_size
+sudo sed -i 's/http {/http {\\n    client_max_body_size 50M;\\n    client_body_buffer_size 128k;/g' /etc/nginx/nginx.conf
+sudo systemctl reload nginx
+nginx -t
+
+=== DOCUMENT: SSH Authentication Failure (TS-205) ===
+Trigger: sshd failed password
+Summary: SSH daemon rejected login attempts for user due to invalid permissions on key directory or invalid authentication keys.
+Cause: Permissions on the user's ~/.ssh directory or ~/.ssh/authorized_keys are too open, prompting the sshd daemon to ignore the keys.
+Resolution: Secure the directory permissions by running chmod 700 ~/.ssh and chmod 600 ~/.ssh/authorized_keys to ensure proper ownership and lock down access rights.
+Commands:
+ls -la ~/.ssh
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+sudo systemctl restart sshd
+
+=== DOCUMENT: Kubernetes OOMKilled Pod (TS-309) ===
+Trigger: OOMKilled
+Summary: Container in the pod has reached its designated memory limits and was terminated by the Linux Out-Of-Memory killer.
+Cause: The application process inside container cognitive-agent-core requested more RAM than allocated in the deployment manifests specifications.
+Resolution: Increase resource memory limits in the YAML deployment spec by setting resources.limits.memory to 1Gi or higher to allow headroom for spiking jobs.
+Commands:
+kubectl get pod
+kubectl describe pod -n default
+kubectl patch deployment cognitive-agent -p '{"spec":{"template":{"spec":{"containers":[{"name":"cognitive-agent-core","resources":{"limits":{"memory":"1Gi"}}}]}}}}'
+
+=== DOCUMENT: Database Connection Timeout (TS-412) ===
+Trigger: connection limit exceeded
+Summary: Database server is refusing connection requests because the maximum connection threshold has been reached.
+Cause: Max connection pool limits on PostgreSQL are saturated due to lingering connections and un-closed client cursors.
+Resolution: Raise maximum client connections in postgresql.conf to 250 and implement aggressive connection pool timeout limits.
+Commands:
+psql -U postgres -c 'SHOW max_connections;'
+psql -U postgres -c "SELECT count(*), state FROM pg_stat_activity GROUP BY state;"
+sudo sed -i 's/max_connections = 100/max_connections = 250/g' /var/lib/pgsql/data/postgresql.conf
+sudo systemctl restart postgresql
