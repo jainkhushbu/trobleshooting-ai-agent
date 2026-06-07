@@ -250,7 +250,7 @@ div[data-testid="stFileUploader"] section::before {
     order: 1 !important;
 }
 div[data-testid="stFileUploader"] section::after {
-    content: "Drop PDFs, YAMLs, or log files" !important;
+    content: "Drop PDFs, docx, or guidelines" !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.8rem !important;
     color: #94a3b8 !important; /* Override transparent to show custom label */
@@ -755,3 +755,115 @@ div[data-testid="stTextInput"] button {
 .console-warn { color: #f59e0b; }
 .console-error { color: #ef4444; }
 .console-cmd { color: #e2e8f0; font-weight: 600; }
+
+/* Page 2 Redesign Styling */
+.heading-display-card {
+    background-color: #121824;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+.heading-display-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+.heading-display-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Approve Dialog Box */
+.approve-dialog-box {
+    background-color: rgba(18, 24, 36, 0.95);
+    border: 1px solid #eab308; /* Yellow warning border */
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(234, 179, 8, 0.1);
+}
+.dialog-warning-header {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ef4444; /* Red warning */
+    margin-bottom: 8px;
+}
+.dialog-info-header {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #8ab4f8; /* Blue info */
+    margin-bottom: 8px;
+}
+.dialog-text {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+.dialog-text code {
+    background-color: #0c1017;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #f43f5e;
+    font-family: monospace;
+}
+
+/* Verification Result Box */
+.verification-result-card {
+    background-color: #121824;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+}
+.verification-result-card.card-disabled {
+    border-color: rgba(30, 41, 59, 0.3);
+    background-color: rgba(18, 24, 36, 0.3);
+}
+.verification-result-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #8fa0dd;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 8px;
+}
+.verification-result-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+.result-label {
+    color: #94a3b8;
+}
+.result-value {
+    font-weight: 600;
+    color: #ffffff;
+}
+.result-value.val-healthy {
+    color: #10b981;
+}
+.result-summary-text {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: #cbd5e1;
+    background-color: #0c1017;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
